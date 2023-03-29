@@ -5,22 +5,22 @@ const users=require('../Models/User');
 
 const Booking=async(req,res)=>{
     const {movie,date,seatNumber,user}=req.body;
-    let exisitingMovie;
-    let exisitingUser;
+    let existingMovie;
+    let existingUser;
     try{
-        exisitingMovie=await Movies.findById(movie);
-        exisitingUser=await users.findById(user);
-        console.log(exisitingUser,exisitingMovie)
+        existingMovie=await Movies.findById(movie);
+        existingUser=await users.findById(user);
+        console.log(existingUser,existingMovie);
     }   
     catch(e)
     {
         return res.send(e.message);
     }
-    if(!exisitingMovie)
+    if(!existingMovie)
     {
         return res.status(404).json({message:"Movie not found by given id"});
     }
-    if(!exisitingUser)
+    if(!existingUser)
     {
         return res.status(404).json({message:"User not found by given id"});
     }
@@ -36,10 +36,10 @@ const Booking=async(req,res)=>{
 
         const session= await mongoose.startSession();
          session.startTransaction();
-        exisitingUser.bookings.push(newBooking)
-        exisitingMovie.bookings.push(newBooking);
-        await exisitingUser.save({ session });
-        await exisitingMovie.save({ session });
+        existingUser.bookings.push(newBooking);
+        existingMovie.bookings.push(newBooking);
+        await existingUser.save({ session });
+        await existingMovie.save({ session });
         await newBooking.save({ session });
         
         session.commitTransaction();
@@ -56,8 +56,8 @@ const Booking=async(req,res)=>{
     if(!newBooking)
     {
         res.status(400).json({
-            message:"something Went Wrong"
-        })
+            message:"something Went Wrong",
+        });
     }
     console.log(newBooking);
     return res.status(201).json({newBooking});

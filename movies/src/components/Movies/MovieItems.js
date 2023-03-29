@@ -17,7 +17,7 @@ const MovieItems = ({title,releaseDate,posterUrl,id}) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button LinkComponent={Link} to={`/booking/${id}`} sx={{margin:'auto'}} size="small">BOOK</Button>
+        <Button variant='contained' LinkComponent={Link} to={`/booking/${id}`} sx={{margin:'auto'}} size="small">BOOK</Button>
       </CardActions>
     </Card>
   )
